@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/ico" href="static/pic/fav.ico">
+</head>
+<body class="record_page_body">
+<div class="wrapper_record">
+    <header class="header_title">
+        <img src="{% static 'pic/logo3.svg' %}" alt="logo" class="logo">
+        <li><a href="/" class = "top_nav">Главная</a></li>
+        <li><a href="/gallery/" class = "top_nav">Галерея</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/record/" class="top_nav">Запись</a></li>
+            <div class='top_nav'>{{ user.username }}</div>
+            <li><a href="/logout/" class="top_nav">Выйти</a></li>
+        {% else %}
+            <li><a href="/login/" class="top_nav">Вход</a></li>
+        {% endif %}
+    </header>
+    <main class="main_content_record">
+        <section class="conteiner_section">
+            <div class="row">
+                <div class="content_block_record">
+                    <form method="POST" class="form_record_page">
+                        <div class="form_record_page_div">
+                            {% csrf_token %}     
+                            {{ form.as_p }}   
+                        </div>
+                        <button type="submit" class='but_record'>Записаться</button>
+                    </form>            
+                </div>               
+            </div>                    
+        </section>
+            <footer class="footer_record">
+                <p>2024 Beauty Salon. All rights reserved.</p>
+            </footer>
+    </main> 
+</div>
+</body>
+</html>

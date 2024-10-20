@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/ico" href="static/pic/fav.ico">
+    <title>Регистрация</title>
+</head>
+<body>
+    <style>
+        body{
+            background-image: url("{% static 'pic/banner.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;  
+            background-position: center;
+        }
+    </style>
+    <header class="header_title">
+        <img src="{% static 'pic/logo3.svg' %}" alt="logo" class="logo">
+        <li><a href="/" class = "top_nav">Главная</a></li>
+        <li><a href="/gallery/" class = "top_nav">Галерея</a></li>
+        {% if user.is_authenticated %}
+            <div class='top_nav'>{{ user.username }}</div>
+            <li><a href="/logout/" class="top_nav">Выйти</a></li>
+        {% else %}
+            <li><a href="/login/" class="top_nav">Вход</a></li>
+        {% endif %}
+    </header>
+    <main class="main_content_registration">
+        {% if error %}
+            <p style="color:red;" class="erroe_info">{{ error }}</p>
+        {% endif %}
+                <form method="post" class="form_regisr_main">
+                    
+                    {% csrf_token %}
+                    <div class="form_registr">
+                        <div class="label_input_info">
+                            <input type="text" id="id_username" name="username" required class="user_name_reg_input" placeholder=" " />
+                            <label for="id_username" class="floating-label">Имя</label>
+                        </div>
+                        <div class="label_input_info">
+                            <input type="email" id="id_email" name="email" required  class="user_name_reg_input" placeholder="">
+                            <label for="id_username" class="floating-label">Email</label>
+                        </div>
+                        <div class="label_input_info">
+                            <input type="password" id="id_password1" name="password1" required  class="user_name_reg_input" placeholder="">
+                            <label for="id_username" class="floating-label">Пароль</label>
+                        </div>
+                        <div class="label_input_info">
+                            <input type="password" id="id_password2" name="password2" required  class="user_name_reg_input" placeholder="">
+                            <label for="id_username" class="floating-label_pass">Подтверждение пароля</label>
+                        </div>
+
+                        <button type="submit" class="but_registration_user">Регистрация</button>
+                        <a href="{% url 'login' %}" class="refresh_reg_page">Уже есть аккаунт?</a>
+                    </div>
+                </form>  
+    </main>
+    <footer class="footer_reg_page">
+        <p>2024 Beauty Salon. All rights reserved.</p>
+    </footer>
+</body>
+</html>

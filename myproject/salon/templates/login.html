@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/ico" href="static/pic/fav.ico">
+    <title>Вход</title>
+</head>
+<body>
+    <style>
+        body{
+            background-image: url("{% static 'pic/banner.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;  
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    
+    <header class="header_title">
+        <img src="{% static 'pic/logo3.svg' %}" alt="logo" class="logo">        
+        <li><a href="/" class = "top_nav">Главная</a></li>
+        <li><a href="/gallery/" class = "top_nav">Галерея</a></li>
+        {% if user.is_authenticated %}
+            <div class='top_nav'>{{ user.username }}</div>
+            <li><a href="/logout/" class="top_nav">Выйти</a></li>
+        {% else %}
+            <li><a href="/login/" class="top_nav">Вход</a></li>
+        {% endif %}
+    </header>
+
+    <main class="main_content_login">
+        {% if error %}
+            <p style="color:red;" class="erroe_info">{{ error }}</p>
+        {% endif %}
+        <form method="post" class="form_login_main">
+            {% csrf_token %}
+            <div class="form_login">
+                <input type="text" name="username" required, class="login_name" placeholder="Имя пользователя">
+                
+                <input type="password" name="password" required, class="login_pass" placeholder="Пароль">
+                <div class="captcha-container">
+                    <div class="captcha-image">
+                        {{ form.capcha }}
+                        
+                    </div>
+                    {{ form.capcha.errors }}
+                    
+                </div>            
+                <button type="submit" class="but_enter">Войти</button>
+                <h3 class="login_soc">Войти с помощью социальных сетей</h3>
+                <ul class="soc_login_block">
+                    <li class="list_soc_inp_block">
+                        <a href="#" class="soc_login_btn">
+                            <img src="/static/pic/icons8-50.png" alt="Вход с помощью иконки">
+                        </a>
+                        <a href="#" class="soc_login_btn">
+                            <img src="/static/pic/facebook.png" alt="Вход с Facebook">
+                        </a>
+                        <a href="#" class="soc_login_btn">
+                            <img src="/static/pic/google.png" alt="Вход с Google">
+                        </a>
+                    </li>
+                </ul>
+                <a href="{% url 'register_client' %}" class="but_enter">Регистрация</a>
+            </div>   
+        </form>        
+    </main>
+    <footer class="footer_login_page">
+        <p>2024 Beauty Salon. All rights reserved.</p>
+    </footer>
+</body>
+</html>

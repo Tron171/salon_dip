@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" class="fav_ico" type="image/ico" href="static/pic/fav.ico">
+</head>
+<body>
+    <div class="wrapper_home">
+        <header class="header_title_home">
+            <img src="{% static 'pic/logo3.svg' %}" alt="logo" class="logo">
+            <li><a href="/" class = "top_nav">Главная</a></li>
+            <li><a href="/gallery/" class = "top_nav">Галерея</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/record/" class="top_nav">Запись</a></li>
+                <li><a href="#" class='top_nav'>{{ user.username }}</a></li>
+                <li><a href="/logout/" class="top_nav">Выйти</a></li>
+            {% else %}
+                <li><a href="/login/" class="top_nav">Вход</a></li>
+            {% endif %}
+        </header>     
+        <main class="main_content_home">
+            <div class="parallax"></div>
+            <section class="conteiner_section"> 
+                <div class="row"> 
+                    <div class="content_block">
+                            {% for worker in workers %}
+                                <ul class="list_cpecification_style">
+                                    <li class="card_spec_main">
+                                        <div class="pic_conteiner_bloc">
+                                            <img src="{{ worker.speciality.photo.url }}" alt="{{ worker.name }}" class="worker_photo">
+                                        </div>
+                                        <p class="name_spec">{{ worker.speciality }}</p>
+                                        
+                                        <div class="price_block">{{ worker.speciality.price }} рублей</div>
+                                        
+                                    </li>  
+                                </ul>
+                            {% endfor %}                               
+                    </div>
+                </div><div class="parallax"></div>
+            
+                <div class="sertificate"></div>
+                    <ul class="sertificate_img_head">
+                        <li>
+                            <img src="{% static 'pic/barb.webp' %}" alt="sertificate" class="sertificate_img">
+                            <img src="{% static 'pic/manik.jpg' %}" alt="sertificate" class="sertificate_img">
+                            <img src="{% static 'pic/mass.webp' %}" alt="sertificate" class="sertificate_img">  
+                            <img src="{% static 'pic/sertifikat1.jpg' %}" alt="sertificate" class="sertificate_img">  
+                        </li>
+                    </ul>
+                
+                    <div class="action_home_page">
+                        <img src="{% static 'pic/action.jpg' %}" alt="action" class="action_pic_home_page">
+                    </div>
+
+                    <footer class="footer">
+                        <p>2024 Beauty Salon. All rights reserved.</p>
+                    </footer>    
+
+                </div>
+                      
+            </section>       
+        </main>  
+        
+    </div>
+
+</body>
+</html>

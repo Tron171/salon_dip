@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Галерея</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/ico" href="static/pic/fav.ico">
+</head>
+<body>
+    <div class="wrapper_gallery">
+        <header class="header_title_home">
+            <img src="{% static 'pic/logo3.svg' %}" alt="logo" class="logo">
+            <li><a href="/" class = "top_nav">Главная</a></li>
+            <li><a href="/gallery/" class = "top_nav">Галерея</a></li>
+            
+            {% if user.is_authenticated %}
+                <li><a href="/record/" class="top_nav">Запись</a></li>
+                <div class='top_nav'>{{ user.username }}</div>
+                <li><a href="/logout/" class="top_nav">Выйти</a></li>
+            {% else %}
+                <li><a href="/login/" class="top_nav">Вход</a></li>
+            {% endif %}
+        </header>
+        <main class="main_content_gallery">
+            <div class="images_nails">
+        
+                {% for speciality, images in paginated_specialities.items %}
+                    <div class="speciality-group" style="{{ speciality.color }};">
+                        <h2 class="title_gallery">{{ speciality.name }}</h2>
+                        <div class="image-container">
+                            {% for image in images %}
+                                <img src="{{ image.image.url }}" alt="{{ image.description }}" class="img_gallery">
+                            {% endfor %}
+                        </div>                        
+                         <div class="pagination">
+                            <span class="step-links">                                
+                                {% if images.has_previous %}
+                                    <a href="?page_{{ speciality.id }}={{ images.previous_page_number }}" >&lt;</a>                               
+                                {% endif %}                               
+                                <span class="current">
+                                    Страница {{ images.number }} из {{ images.paginator.num_pages }}.
+                                </span>                                
+                                {% if images.has_next %}
+                                    <a href="?page_{{ speciality.id }}={{ images.next_page_number }}">></a>
+                                {% endif %}
+                            </span>
+                        </div> 
+                    </div>
+                {% endfor %}
+                <footer class="footer">
+                    <p>2024 Beauty Salon. All rights reserved.</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
